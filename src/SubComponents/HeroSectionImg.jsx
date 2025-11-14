@@ -27,7 +27,7 @@ export default function TechServicesDiagram() {
 
   return (
     <div className="flex h-[395px] overflow-hidden">
-      <div className="w-[480px] h-full flex items-center p-2 relative">
+      <div className="w-[480px] flex items-center p-2 relative">
         {/* Scale wrapper */}
         <div
           className="relative w-full h-full"
@@ -65,7 +65,7 @@ export default function TechServicesDiagram() {
             animate="visible"
             custom={0.1}
           >
-            <motion.img src={Logo} alt="" className="h-[100px] w-auto " />
+            <motion.img src={Logo} alt="" className="h-[120px] w-auto " />
           </motion.div>
 
           {/* Figma */}

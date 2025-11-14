@@ -7,7 +7,7 @@ import { IoDownloadOutline } from "react-icons/io5";
 import { IoEyeOutline } from "react-icons/io5";
 const Hero = () => {
   return (
-    <div className="flex justify-between mt-16">
+    <div className="flex justify-between mt-16 h-screen">
       {/* Left Side Text */}
       <div className="pl-14">
         <div className="space-y-2">

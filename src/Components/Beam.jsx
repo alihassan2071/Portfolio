@@ -2,14 +2,7 @@ import React from "react";
 import Beams from "../SubComponents/Beam";
 const Beam = () => {
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        position: "absolute",
-        zIndex: "-10",
-      }}
-    >
+    <div className="w-[100%] h-[100vh] absolute -z-10">
       <Beams
         beamWidth={2.5}
         beamHeight={15}

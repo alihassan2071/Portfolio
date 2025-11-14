@@ -70,10 +70,14 @@ const Navbar = () => {
       {/* Contact Button */}
       <div>
         <button className="bg-[linear-gradient(to_right,rgba(255,255,255,0.1),rgba(217,217,217,0.14))] px-8 py-4 rounded-bl-xl shadow transition ">
-          <div className="flex flex-row items-center gap-3">
-            <p className="text-text font-medium hover:text-primary">Contact</p>
-            <GoArrowUpRight className="bg-primary text-white rounded-full p-1 w-6 h-6 hover:scale-105 transition" />
-          </div>
+          <a href="#contact">
+            <div className="flex flex-row items-center gap-3">
+              <p className="text-text font-medium hover:text-primary">
+                Contact
+              </p>
+              <GoArrowUpRight className="bg-primary text-white rounded-full p-1 w-6 h-6 group-hover:animate-pulse" />
+            </div>
+          </a>
         </button>
       </div>
     </nav>
