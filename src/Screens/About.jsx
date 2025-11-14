@@ -1,7 +1,11 @@
 import React from "react";
 
 const About = () => {
-  return <div className="text-center text-primary text-7xl ">About</div>;
+  return (
+    <section className="text-center text-primary text-6xl bg-white">
+      About
+    </section>
+  );
 };
 
 export default About;
