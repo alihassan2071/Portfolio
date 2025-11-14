@@ -1,17 +1,15 @@
 import React from "react";
-import Beams from "../SubComponents/Beam";
-import TextType from "../SubComponents/TextType";
 // Image
-import Logo from "../assets/Logo.png";
-import { GoArrowUpRight } from "react-icons/go";
 import Navbar from "../Layout/Navbar";
 import Beam from "../Components/Beam";
+import Hero from "../Components/Hero";
 
 const Portfolio = () => {
   return (
     <section>
       <Beam />
       <Navbar />
+      <Hero />
       {/* <TextType
         className="text-white"
         text={[
