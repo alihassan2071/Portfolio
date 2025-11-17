@@ -1,253 +1,169 @@
 import React, { useState, useEffect } from "react";
-import { Sparkles, Code, Palette, Rocket } from "lucide-react";
+import Portfolio from "../Screens/Portfolio";
 
-export default function PortfolioWithLoader() {
-  const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
+export default function LoadingScreen() {
+  const [counter, setCounter] = useState(0);
   const [fadeOut, setFadeOut] = useState(false);
+  const [showContent, setShowContent] = useState(false); // <-- ADD THIS
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => setFadeOut(true), 500);
-          setTimeout(() => setLoading(false), 1500);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 30);
+    // Counter animation
+    const startTime = Date.now() + 2000; // Start after 2s delay
+    const duration = 2000;
 
-    return () => clearInterval(interval);
+    const animateCounter = () => {
+      const now = Date.now();
+      const elapsed = now - startTime;
+
+      if (elapsed < 0) {
+        requestAnimationFrame(animateCounter);
+        return;
+      }
+
+      if (elapsed < duration) {
+        const count = Math.min(Math.floor((elapsed / duration) * 100), 100);
+        setCounter(count);
+        requestAnimationFrame(animateCounter);
+      } else {
+        setCounter(100);
+
+        // Fade out animation
+        setTimeout(() => {
+          setFadeOut(true);
+
+          // AFTER fade-out show website
+          setTimeout(() => {
+            setShowContent(true);
+          }, 700); // fade-out duration
+        }, 500);
+      }
+    };
+
+    animateCounter();
   }, []);
 
-  if (loading) {
-    return (
+  // If loader finished, show the website
+  if (showContent) {
+    return <Portfolio />;
+  }
+
+  return (
+    <div className="relative flex items-center justify-center min-h-screen bg-[#0a0a0a] overflow-hidden">
+      {/* Background gradient animation */}
+      <div className="fixed top-[-50%] left-[-50%] w-[200%] h-[200%] pointer-events-none animate-spin-slow">
+        <div className="w-full h-full bg-gradient-radial from-[#00caca]/5 to-transparent" />
+      </div>
+
+      {/* Main loader container */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black via-[#00caca]/10 to-[#000000] transition-opacity duration-1000 ${
-          fadeOut ? "opacity-0" : "opacity-100"
+        className={`text-center relative transition-all duration-800 ${
+          fadeOut ? "opacity-0 scale-95" : "opacity-100 scale-100"
         }`}
       >
-        {/* Glowing background particles */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(60)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-[#00caca] rounded-full animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${1.5 + Math.random() * 2}s`,
-                opacity: Math.random() * 0.5 + 0.3,
-              }}
-            />
+        {/* Name */}
+        <div className="flex justify-center gap-4 md:gap-8 mb-4">
+          {["Ali", "Hassan"].map((word, wordIndex) => (
+            <div key={wordIndex} className="flex">
+              {word.split("").map((letter, letterIndex) => (
+                <span
+                  key={letterIndex}
+                  className="inline-block text-5xl md:text-7xl lg:text-8xl font-bold tracking-wider text-[#BEB7A4]"
+                  style={{
+                    animation: `letterSlide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards`,
+                    animationDelay: `${
+                      (wordIndex * 3 + letterIndex) * 0.05 + 0.1
+                    }s`,
+                    opacity: 0,
+                    transform: "translateY(100px) rotate(10deg)",
+                  }}
+                >
+                  {letter}
+                </span>
+              ))}
+            </div>
           ))}
         </div>
 
-        {/* Rotating gradient orbs */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00caca] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#BEB7A4] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-          <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-[#00caca]/50 rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob animation-delay-4000" />
+        {/* Title */}
+        <div
+          className="text-sm md:text-xl lg:text-2xl font-light tracking-[0.15em] uppercase text-[#BEB7A4]/60 opacity-0"
+          style={{
+            animation: "fadeIn 1s ease forwards 1.5s",
+          }}
+        >
+          The Frontend UI/UX Designer
+          <br />
+          <span className="inline-block mt-2">& React Specialist</span>
         </div>
 
-        {/* Main loader content */}
-        <div className="relative z-10 flex flex-col items-center space-y-8 px-4">
-          {/* Animated loader rings with center icon */}
-          <div className="relative w-32 h-32">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="absolute w-32 h-32 border-4 border-[#00caca] border-t-transparent rounded-full animate-spin" />
-              <div
-                className="absolute w-24 h-24 border-4 border-[#BEB7A4] border-b-transparent rounded-full animate-spin-slow"
-                style={{ animationDirection: "reverse" }}
-              />
-
-              <div className="relative flex items-center justify-center">
-                {progress < 33 && (
-                  <Code className="w-12 h-12 text-[#00caca] animate-pulse" />
-                )}
-                {progress >= 33 && progress < 66 && (
-                  <Palette className="w-12 h-12 text-[#BEB7A4] animate-pulse" />
-                )}
-                {progress >= 66 && (
-                  <Rocket className="w-12 h-12 text-[#00caca]/80 animate-pulse" />
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Glitch text */}
-          <div className="relative">
-            <h1 className="text-5xl font-bold text-[#BEB7A4] tracking-wider relative">
-              <span className="relative inline-block animate-glitch">
-                PORTFOLIO
-              </span>
-            </h1>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span
-                className="text-5xl font-bold text-[#00caca] opacity-70 animate-glitch-2"
-                style={{ clipPath: "polygon(0 0, 100% 0, 100% 45%, 0 45%)" }}
-              >
-                PORTFOLIO
-              </span>
-            </div>
-          </div>
-
-          {/* Loading text */}
-          <div className="flex items-center space-x-2">
-            <Sparkles className="w-5 h-5 text-[#00caca] animate-pulse" />
-            <p className="text-xl text-[#BEB7A4] font-light tracking-widest">
-              {progress < 33 && "INITIALIZING"}
-              {progress >= 33 && progress < 66 && "LOADING ASSETS"}
-              {progress >= 66 && progress < 100 && "ALMOST THERE"}
-              {progress >= 100 && "READY"}
-              <span className="animate-pulse">...</span>
-            </p>
-            <Sparkles className="w-5 h-5 text-[#00caca] animate-pulse" />
-          </div>
-
-          {/* Progress bar */}
-          <div className="w-80 max-w-md">
-            <div className="h-2 bg-black/50 rounded-full overflow-hidden shadow-lg">
-              <div
-                className="h-full bg-gradient-to-r from-[#00caca] via-[#BEB7A4] to-[#00caca] rounded-full transition-all duration-300 ease-out relative"
-                style={{ width: `${progress}%` }}
-              >
-                <div className="absolute inset-0 bg-white/20 animate-shimmer" />
-              </div>
-            </div>
-            <p className="text-center text-sm text-[#BEB7A4] mt-2 font-mono">
-              {progress}%
-            </p>
-          </div>
-
-          {/* Floating elements */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-20 left-20 animate-float">
-              <div className="w-3 h-3 bg-[#00caca] rounded-full blur-sm" />
-            </div>
-            <div className="absolute top-40 right-32 animate-float animation-delay-1000">
-              <div className="w-2 h-2 bg-[#BEB7A4] rounded-full blur-sm" />
-            </div>
-            <div className="absolute bottom-32 left-40 animate-float animation-delay-2000">
-              <div className="w-3 h-3 bg-[#00caca]/80 rounded-full blur-sm" />
-            </div>
-            <div className="absolute bottom-20 right-20 animate-float animation-delay-3000">
-              <div className="w-2 h-2 bg-[#BEB7A4]/70 rounded-full blur-sm" />
-            </div>
-          </div>
+        {/* Progress bar */}
+        <div
+          className="w-[250px] md:w-[300px] h-[2px] bg-[#222] mx-auto mt-12 rounded-full overflow-hidden opacity-0"
+          style={{
+            animation: "fadeIn 1s ease forwards 1.8s",
+          }}
+        >
+          <div
+            className="h-full bg-gradient-to-r from-[#00caca] to-[#00caca]/60"
+            style={{
+              animation: "progressFill 2s ease-in-out forwards 2s",
+              width: "0%",
+            }}
+          />
         </div>
 
-        <style jsx>{`
-          @keyframes blob {
-            0%,
-            100% {
-              transform: translate(0, 0) scale(1);
-            }
-            33% {
-              transform: translate(30px, -50px) scale(1.1);
-            }
-            66% {
-              transform: translate(-20px, 20px) scale(0.9);
-            }
-          }
-          @keyframes spin-slow {
-            from {
-              transform: rotate(0deg);
-            }
-            to {
-              transform: rotate(360deg);
-            }
-          }
-          @keyframes glitch {
-            0%,
-            100% {
-              transform: translate(0);
-            }
-            20% {
-              transform: translate(-2px, 2px);
-            }
-            40% {
-              transform: translate(-2px, -2px);
-            }
-            60% {
-              transform: translate(2px, 2px);
-            }
-            80% {
-              transform: translate(2px, -2px);
-            }
-          }
-          @keyframes glitch-2 {
-            0%,
-            100% {
-              transform: translate(0);
-            }
-            20% {
-              transform: translate(2px, -2px);
-            }
-            40% {
-              transform: translate(2px, 2px);
-            }
-            60% {
-              transform: translate(-2px, -2px);
-            }
-            80% {
-              transform: translate(-2px, 2px);
-            }
-          }
-          @keyframes shimmer {
-            0% {
-              transform: translateX(-100%);
-            }
-            100% {
-              transform: translateX(100%);
-            }
-          }
-          @keyframes float {
-            0%,
-            100% {
-              transform: translateY(0px);
-            }
-            50% {
-              transform: translateY(-20px);
-            }
-          }
-          .animate-blob {
-            animation: blob 7s infinite;
-          }
-          .animate-spin-slow {
-            animation: spin-slow 3s linear infinite;
-          }
-          .animate-glitch {
-            animation: glitch 1s infinite;
-          }
-          .animate-glitch-2 {
-            animation: glitch-2 1s infinite;
-          }
-          .animate-shimmer {
-            animation: shimmer 2s infinite;
-          }
-          .animate-float {
-            animation: float 3s ease-in-out infinite;
-          }
-          .animation-delay-1000 {
-            animation-delay: 1s;
-          }
-          .animation-delay-2000 {
-            animation-delay: 2s;
-          }
-          .animation-delay-3000 {
-            animation-delay: 3s;
-          }
-          .animation-delay-4000 {
-            animation-delay: 4s;
-          }
-        `}</style>
+        {/* Counter */}
+        <div
+          className="text-sm md:text-base text-[#666] mt-4 tabular-nums opacity-0"
+          style={{
+            animation: "fadeIn 1s ease forwards 1.8s",
+          }}
+        >
+          {counter}%
+        </div>
       </div>
-    );
-  }
 
-  return <></>;
+      <style jsx>{`
+        @keyframes letterSlide {
+          to {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+          }
+        }
+
+        @keyframes fadeIn {
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes progressFill {
+          to {
+            width: 100%;
+          }
+        }
+
+        @keyframes spin-slow {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+
+        .bg-gradient-radial {
+          background: radial-gradient(
+            circle at center,
+            currentColor 0%,
+            transparent 70%
+          );
+        }
+      `}</style>
+    </div>
+  );
 }

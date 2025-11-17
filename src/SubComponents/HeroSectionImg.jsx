@@ -65,7 +65,7 @@ export default function TechServicesDiagram() {
             animate="visible"
             custom={0.1}
           >
-            <motion.img src={Logo} alt="" className="h-[120px] w-auto " />
+            <motion.img src={Logo} className="h-[120px] w-auto " />
           </motion.div>
 
           {/* Figma */}
@@ -80,7 +80,7 @@ export default function TechServicesDiagram() {
               className="w-10 h-10 bg-white rounded-full border-2 border-gray-200 shadow-xl flex items-center justify-center"
               animate={float.animate}
             >
-              <img src={Figma} className="h-6 w-6 text-red-500 " />
+              <img src={Figma} alt="" className="h-6 w-6 text-red-500 " />
             </motion.div>
           </motion.div>
 
