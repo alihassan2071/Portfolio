@@ -10,18 +10,6 @@ const Portfolio = () => {
       <Beam />
       <Navbar />
       <Hero />
-      {/* <TextType
-        className="text-white"
-        text={[
-          "Hi I am Ali Hassan",
-          "Hi I am React Specilist",
-          "Hi I am the UI/UX Designer",
-        ]}
-        typingSpeed={75}
-        pauseDuration={1500}
-        showCursor={true}
-        cursorCharacter="_"
-      /> */}
     </section>
   );
 };

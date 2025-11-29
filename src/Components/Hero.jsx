@@ -8,7 +8,7 @@ import { IoEyeOutline } from "react-icons/io5";
 const Hero = () => {
   return (
     <div>
-      <div className="flex justify-between items-center h-[100vh]">
+      <div className="flex justify-between items-center h-fit py-10 overflow-hidden">
         {/* Left Side Text */}
         <div className="pl-14">
           <div className="space-y-2">
@@ -43,19 +43,13 @@ const Hero = () => {
             cutting-edge technologies to build superior digital products.
           </p>
           <div className="flex flex-row gap-4 pt-8">
-            <button
-              // onClick={downloadCV}
-              className="group px-6 py-3 bg-gradient-to-r from-black to-primary rounded-full font-semibold text-white transition-all hover:scale-105 active:scale-95"
-            >
+            <button className="group px-6 py-3 bg-gradient-to-r from-black to-primary rounded-full font-semibold text-white transition-all hover:scale-105 active:scale-95">
               <span className="flex items-center space-x-2">
                 <IoDownloadOutline className="w-4 h-4 md:w-5 md:h-5 group-hover:animate-bounce" />
                 <span>Download CV</span>
               </span>
             </button>
-            <button
-              // onClick={viewCV}
-              className="group px-6  border-2 border-primary rounded-full text-white hover:bg-gradient-to-r from-black to-primary hover:text-white hover:border-none backdrop-blur-sm transition-all hover:scale-105 active:scale-95"
-            >
+            <button className="group px-6  border-2 border-primary rounded-full text-white hover:bg-gradient-to-r from-black to-primary hover:text-white hover:border-none backdrop-blur-sm transition-all hover:scale-105 active:scale-95">
               <span className="flex items-center space-x-2">
                 <IoEyeOutline className="w-4 h-4 md:w-5 md:h-5 group-hover:animate-pulse" />
                 <span>View CV</span>

@@ -9,6 +9,7 @@
 /* Global Styles */
 body {
   font-family: "Montserrat", sans-serif;
+  background-color: black;
 }
 body::-webkit-scrollbar {
   display: none;
